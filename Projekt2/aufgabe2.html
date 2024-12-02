@@ -1,0 +1,123 @@
+<html>
+<head>	
+<title>Leaflet Bsp 1</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@latest/dist/leaflet.js"></script>
+<script src="building_data.js"></script>
+
+<script>
+    //lese die daten aus building_data.js aus
+    //console.log(building_data.features[0].properties.Year_of_co);
+    //console.log(building_data.features[0].properties.Latitude);
+    //console.log(building_data.features[0].properties.Longitude);
+
+    function initialize() {
+        var mymap = L.map('map').setView([48.79205, 9.20758], 16);
+        var CartoDB_Positron = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        });
+        CartoDB_Positron.addTo(mymap);
+
+        function getColor(d) {
+
+            return d > 2020 ? '#d73027' :
+            d > 2000 ? '#f46d43' :
+            d > 1980 ? '#fdae61' :
+            d > 1970 ? '#fee08b' :
+            d > 1950 ? '#d9ef8b' :
+            d > 1930 ? '#a6d96a' :
+            d > 1910 ? '#66bd63' :
+                       '#1a9850' ;
+
+            //d > 1900 ? '#A4C711' :
+            //d > 1800 ? '#000000' :
+            // '#000000';
+
+            
+                    //d > 250 ? '#F22E22' :
+                   //d > 200 ? '#F56D1F' :
+                   //d > 150 ? '#F9A717' :
+                   //d > 125 ? '#FECE02' :
+                   //d > 100 ? '#F6EC00' :
+                   //d > 75  ? '#D1E023' :
+                   //d > 50  ? '#B2D531' :
+                   //d > 25  ? '#A4C711' :
+                   //d > 0   ? '#61B949' :
+                             '#FFEDA0';
+        }
+
+        function style(feature) {
+            return {
+                fillColor: getColor(feature.properties.Year_of_co),
+                weight: 1,
+                opacity: 1,
+                color: 'white',
+                fillOpacity: 0.95
+            };
+        }
+
+        function onEachFeature(feature, layer) {
+            const yearOfConstruction = feature.properties.Year_of_co;
+            //const currentYear = new Date().getFullYear();
+            //const ageOfBuilding = currentYear - yearOfConstruction;
+            layer.bindPopup(
+                '<h4>Gebaeude-ID: ' + feature.properties.gml_id + '</h4>' +
+                '<p>Baujahr: ' + yearOfConstruction + '. </p>'
+            );
+        }
+
+        L.geoJSON(building_data, {
+            style: style,
+            onEachFeature: onEachFeature
+        }).addTo(mymap);
+
+        var legend = L.control({position: 'bottomright'});
+
+        legend.onAdd = function (map) {
+            var div = L.DomUtil.create('div', 'info legend'),
+                grades = [0, 1910, 1930, 1950, 1970, 1980, 2000, 2020],
+                labels = [];
+
+            // loop through our density intervals and generate a label with a colored square for each interval
+            for (var i = 0; i < grades.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+                    grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+            }
+
+            return div;
+        };
+
+        legend.addTo(mymap);
+        
+    }
+
+    window.onload = initialize;
+</script>
+
+    <style>
+        .legend {
+            background: white;
+            line-height: 18px;
+            padding: 6px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            font-size: 12px;
+        }
+        .legend i {
+            width: 18px;
+            height: 18px;
+            float: left;
+            margin-right: 8px;
+            opacity: 0.8;
+        }
+    </style>
+
+
+
+</head>
+<body>
+    <div id="map" style="height: 600px;"></div>
+</body>
+</html>

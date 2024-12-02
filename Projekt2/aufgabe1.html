@@ -1,0 +1,82 @@
+<html>
+<head>	
+<title>Leaflet Bsp 1</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@latest/dist/leaflet.js"></script>
+
+<script>
+
+    var map
+
+    function initialize() {
+	map = L.map('map_canvas').setView([48.783333, 9.183333], 10);
+
+	var osm = new L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a>     contributors',
+        minZoom: 2,
+        maxZoom: 18
+      });
+     map.addLayer(osm);
+
+     var essenTrinken = L.layerGroup();
+     var kunstKultur = L.layerGroup();
+     var wohnen = L.layerGroup();
+
+     var houseIcon = L.icon({
+         iconUrl: 'src/house.png',
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32]
+        });
+
+     var museumIcon = L.icon({
+            iconUrl: 'src/museum.png',
+                iconSize: [32, 32],
+                iconAnchor: [16, 32],
+                popupAnchor: [0, -32]
+            });
+
+     var restaurantIcon = L.icon({
+            iconUrl: 'src/restaurant.png',
+                iconSize: [32, 32],
+                iconAnchor: [16, 32],
+                popupAnchor: [0, -32]
+            });
+
+     // Essen und Trinken
+        L.marker([48.781111, 9.173611], { icon: restaurantIcon, title: 'Cafe'})
+            .bindPopup("<b><b>Cafe</b><br>Ein beliebter Treffpunkt.")
+            .addTo(essenTrinken);
+
+        L.marker([48.775, 9.180], { icon: restaurantIcon, title: 'Restaurant'}).bindPopup("<b>Restaurant</b><br>Hier gibt es leckeres Essen.").addTo(essenTrinken);
+
+        // Kunst & Kultur
+        L.marker([48.781944, 9.173611], { icon: museumIcon, title: 'Hauptbahnhof' }).bindPopup("<b>Hauptbahnhof</b><br>Das Zentrum von Stuttgart.").addTo(kunstKultur);
+        L.marker([48.78, 9.173], { icon: museumIcon, title: 'HFT Stuttgart' }).bindPopup("<b>HFT Stuttgart</b><br>Hochschule für Technik.").addTo(kunstKultur);
+        L.marker([48.776944, 9.185278], { icon: museumIcon, title: 'Staatstheater' }).bindPopup("<b>Staatstheater</b><br>Ein Ort für Kultur.").addTo(kunstKultur);
+
+        // Wohnen
+        L.marker([48.774167, 9.181111], { icon: houseIcon, title: 'Wohnheim 1' }).bindPopup("<b>Wohnheim 1</b><br>Günstige Wohnmöglichkeit.").addTo(wohnen);
+        L.marker([48.775833, 9.184167], { icon: houseIcon, title: 'Wohnheim 2' }).bindPopup("<b>Wohnheim 2</b><br>Modern und zentral gelegen.").addTo(wohnen);
+
+        var overlays = {
+            "Essen & Trinken": essenTrinken,
+            "Kunst & Kultur": kunstKultur,
+            "Wohnen": wohnen
+        };
+
+        L.control.layers(null, overlays).addTo(map);
+
+        // Standardmäßig alle Layer anzeigen
+        essenTrinken.addTo(map);
+        kunstKultur.addTo(map);
+        wohnen.addTo(map);
+  }
+
+</script>
+	
+</head>
+<body onload="initialize()">
+<div id="map_canvas" style="width: 600px; height: 400px;"></div>
+</body>
+</html>
