@@ -43,22 +43,18 @@
                 popupAnchor: [0, -32]
             });
 
-     // Essen und Trinken
-        L.marker([48.781111, 9.173611], { icon: restaurantIcon, title: 'Cafe'})
-            .bindPopup("<b><b>Cafe</b><br>Ein beliebter Treffpunkt.")
-            .addTo(essenTrinken);
-
-        L.marker([48.775, 9.180], { icon: restaurantIcon, title: 'Restaurant'}).bindPopup("<b>Restaurant</b><br>Hier gibt es leckeres Essen.").addTo(essenTrinken);
-
+     	// Essen und Trinken
+	    L.marker([48.77334264003022, 9.17761514776878], { icon: restaurantIcon, title: 'Umami Ramen'}).bindPopup("<b>Umami Ramen</b><br>Hier gibt verschiedene Ramen.").addTo(essenTrinken);
+	    L.marker([48.776134203621, 9.174195787378551], { icon: restaurantIcon, title: 'That's Amore'}).bindPopup("<b>That's Amore</b><br>Italian Steakhouse & Wine Lounge.").addTo(essenTrinken);
+	    L.marker([48.767465783868815, 9.175744852825371], { icon: restaurantIcon, title: 'Herbert'z Espressobar'}).bindPopup("<b>Herbert'z Espressobar</b><br>Hier gibt es verschiedene Kaffees.").addTo(essenTrinken);
+	    
         // Kunst & Kultur
-        L.marker([48.781944, 9.173611], { icon: museumIcon, title: 'Hauptbahnhof' }).bindPopup("<b>Hauptbahnhof</b><br>Das Zentrum von Stuttgart.").addTo(kunstKultur);
-        L.marker([48.78, 9.173], { icon: museumIcon, title: 'HFT Stuttgart' }).bindPopup("<b>HFT Stuttgart</b><br>Hochschule für Technik.").addTo(kunstKultur);
-        L.marker([48.776944, 9.185278], { icon: museumIcon, title: 'Staatstheater' }).bindPopup("<b>Staatstheater</b><br>Ein Ort für Kultur.").addTo(kunstKultur);
-
+	    L.marker([48.778425360534065, 9.181853228947464], { icon: museumIcon, title: 'Neues Schloss' }).bindPopup("<b>Neues Schloss</b><br>wird von Landesregierung genutzt").addTo(kunstKultur);
+	    L.marker([48.78332392201011, 9.170377449758245], { icon: museumIcon, title: 'Linden-Museum' }).bindPopup("<b>Linden-Museum</b><br>Kunst und Artefakte aus aller Welt.").addTo(kunstKultur);
         // Wohnen
-        L.marker([48.774167, 9.181111], { icon: houseIcon, title: 'Wohnheim 1' }).bindPopup("<b>Wohnheim 1</b><br>Günstige Wohnmöglichkeit.").addTo(wohnen);
-        L.marker([48.775833, 9.184167], { icon: houseIcon, title: 'Wohnheim 2' }).bindPopup("<b>Wohnheim 2</b><br>Modern und zentral gelegen.").addTo(wohnen);
 
+	    L.marker([48.784322116385056, 9.189132806098197], { icon: houseIcon, title: 'Le Méridien' }).bindPopup("<b>Le Méridien</b><br>Hotel nah am Bahnhof").addTo(wohnen);
+	    
         var overlays = {
             "Essen & Trinken": essenTrinken,
             "Kunst & Kultur": kunstKultur,
