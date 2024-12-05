@@ -1,33 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Choropleth Map with Leaflet</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
-          integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI="
-          crossorigin=""/>
-    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-            integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-            crossorigin=""></script>
+    <title>Bildungsabschlüsse in Stuttgart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/leaflet.css" />
     <style>
-        #map {
-            height: 800px;
-            width: 100%;
-        }
-        .info {
+        .legend {
+            background: white;
+            line-height: 1.5;
             padding: 6px 8px;
             font: 14px/16px Arial, Helvetica, sans-serif;
-            background: white;
-            background: rgba(255,255,255,0.8);
-            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             border-radius: 5px;
         }
-        .info legend {
-            line-height: 18px;
-            color: #555;
-        }
-        .info legend i {
+        .legend i {
             width: 18px;
             height: 18px;
             float: left;
@@ -37,59 +23,92 @@
     </style>
 </head>
 <body>
-<div id="map"></div>
-<script>
-    var map = L.map('map').setView([48.776, 9.177], 12);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    <div id="map" style="width: 100%; height: 600px;"></div>
+    <script>
+        var map = L.map('map').setView([48.7758, 9.1829], 12);
 
-    fetch('src/Orteile_Bildung.geojson')
-        .then(response => response.json())
-        .then(data => {
-            var geoJsonLayer = L.geoJson(data, {
-                style: function(feature) {
-                    return {
-                        fillColor: getColor(feature.properties.value),
-                        weight: 2,
-                        opacity: 1,
-                        color: 'white',
-                        dashArray: '3',
-                        fillOpacity: 0.7
-                    };
-                },
-                onEachFeature: function(feature, layer) {
-                    layer.bindPopup("Attribute: " + feature.properties.value);
-                }
-            }).addTo(map);
-        });
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-    function getColor(d) {
-        return d > 100 ? '#800026' :
-            d > 50  ? '#BD0026' :
-                d > 20  ? '#E31A1C' :
-                    d > 10  ? '#FC4E2A' :
-                        d > 5   ? '#FD8D3C' :
-                            d > 0   ? '#FEB24C' :
-                                '#FFEDA0';
-    }
+        fetch('/src/Ortsteile_Bildung.geojson')
+            .then(response => response.json())
+            .then(data => {
+                L.geoJSON(data, {
+                    style: function(feature) {
+                        return {
+                            fillColor: getColor(feature),
+                            weight: 2,
+                            opacity: 1,
+                            color: 'white',
+                            dashArray: '3',
+                            fillOpacity: 0.7
+                        };
+                    },
+                    onEachFeature: function(feature, layer) {
+                        var popupContent = "<b>Stadtteil:</b> " + feature.properties.ortsteil + "<br>" +
+                                           "<b>Berufsausbildung:</b> " + feature.properties.ot_beruf_f + "<br>" +
+                                           "<b>Hochschule:</b> " + feature.properties.ot_beruf_h + "<br>" +
+                                           "<b>Kein Abschluss:</b> " + feature.properties.ot_beruf_k + "<br>" +
+                                           "<b>Lehre:</b> " + feature.properties.ot_beruf_l + "<br>" +
+                                           "<b>Promotion:</b> " + feature.properties.ot_beruf_p + "<br>" +
+                                           "<b>Schule:</b> " + feature.properties.ot_schul_h + "<br>" +
+                                           "<b>Schule 1:</b> " + feature.properties.ot_schul_1 + "<br>" +
+                                           "<b>Schule K:</b> " + feature.properties.ot_schul_k + "<br>" +
+                                           "<b>Schule M:</b> " + feature.properties.ot_schul_m;
+                        layer.bindPopup(popupContent);
+                    }
+                }).addTo(map);
 
-    var legend = L.control({position: 'bottomright'});
-    legend.onAdd = function (map) {
-        var div = L.DomUtil.create('div', 'info legend'),
-            grades = [0, 5, 10, 20, 50, 100],
-            labels = [];
+                // Legende hinzufügen
+                var legend = L.control({ position: 'bottomright' });
 
-        for (var i = 0; i < grades.length; i++) {
-            div.innerHTML +=
-                '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
-                grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] : '+') + '<br>';
+                legend.onAdd = function (map) {
+                    var div = L.DomUtil.create('div', 'legend'),
+                        grades = ["Berufsausbildung", "Hochschule", "Kein Abschluss", "Lehre", "Promotion", "Hauptschulabschluss", "Realschulabschluss", "Fachhochschulreife", "Abitur"],
+                        labels = [],
+                        colors = ['#800026', '#BD0026', '#E31A1C', '#FC4E2A', '#FD8D3C', '#FEB24C', '#FED976', '#FFEDA0', '#FFFFCC'];
+
+                    for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                            '<i style="background:' + colors[i] + '"></i> ' +
+                            grades[i] + '<br>';
+                    }
+
+                    return div;
+                };
+
+                legend.addTo(map);
+            })
+            .catch(error => console.error('Error loading the GeoJSON file:', error));
+
+        function getColor(feature) {
+            var properties = feature.properties;
+            var max = Math.max(properties.ot_beruf_f, properties.ot_beruf_h, properties.ot_beruf_k, properties.ot_beruf_l, properties.ot_beruf_p, properties.ot_schul_h, properties.ot_schul_1, properties.ot_schul_k, properties.ot_schul_m);
+            
+            switch (max) {
+                case properties.ot_beruf_f:
+                    return '#800026'; 
+                case properties.ot_beruf_h:
+                    return '#BD0026'; 
+                case properties.ot_beruf_k:
+                    return '#E31A1C'; 
+                case properties.ot_beruf_l:
+                    return '#FC4E2A'; 
+                case properties.ot_beruf_p:
+                    return '#FD8D3C'; 
+                case properties.ot_schul_h:
+                    return '#FEB24C'; 
+                case properties.ot_schul_1:
+                    return '#FED976'; 
+                case properties.ot_schul_k:
+                    return '#FFEDA0'; 
+                case properties.ot_schul_m:
+                    return '#FFFFCC'; 
+                default:
+                    return '#FFFFFF';
+            }
         }
-
-        return div;
-    };
-
-    legend.addTo(map);
-</script>
+    </script>
 </body>
 </html>
