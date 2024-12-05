@@ -44,17 +44,26 @@
             });
 
      	// Essen und Trinken
-	    L.marker([48.77334264003022, 9.17761514776878], { icon: restaurantIcon, title: 'Umami Ramen'}).bindPopup("<b>Umami Ramen</b><br>Hier gibt verschiedene Ramen.").addTo(essenTrinken);
-	    L.marker([48.776134203621, 9.174195787378551], { icon: restaurantIcon, title: 'Thats Amore'}).bindPopup("<b>That's Amore</b><br>Italian Steakhouse & Wine Lounge.").addTo(essenTrinken);
-	    L.marker([48.767465783868815, 9.175744852825371], { icon: restaurantIcon, title: 'Herbertz Espressobar'}).bindPopup("<b>Herbert'z Espressobar</b><br>Hier gibt es verschiedene Kaffees.").addTo(essenTrinken);
-	    
-        // Kunst & Kultur
+	    L.marker([48.781944, 9.173611], { icon: museumIcon, title: 'Hauptbahnhof' }).bindPopup("<b>Hauptbahnhof</b><br>Das Zentrum von Stuttgart.").addTo(kunstKultur);
 	    L.marker([48.778425360534065, 9.181853228947464], { icon: museumIcon, title: 'Neues Schloss' }).bindPopup("<b>Neues Schloss</b><br>wird von Landesregierung genutzt").addTo(kunstKultur);
 	    L.marker([48.78332392201011, 9.170377449758245], { icon: museumIcon, title: 'Linden-Museum' }).bindPopup("<b>Linden-Museum</b><br>Kunst und Artefakte aus aller Welt.").addTo(kunstKultur);
-        // Wohnen
+	    L.marker([48.75650741017711, 9.19026432964977], { icon: museumIcon, title: 'Fernsehturm' }).bindPopup("<b>Fernsehturm</b><br>weltweit erster Fernsehturm.").addTo(kunstKultur);
+	    L.marker([48.780860852489475, 9.186283582625581], { icon: museumIcon, title: 'Staatsgalerie' }).bindPopup("<b>Staatsgalerie</b><br>Kunst des 20 Jahrhunderts.").addTo(kunstKultur);
 
+        // Kunst & Kultur
+	    L.marker([48.77334264003022, 9.17761514776878], { icon: restaurantIcon, title: 'Umami Ramen'}).bindPopup("<b>Umami Ramen</b><br>Hier gibt verschiedene Ramen.").addTo(essenTrinken);
+	    L.marker([48.776134203621, 9.174195787378551], { icon: restaurantIcon, title: 'Thats Amore'}).bindPopup("<b>Thats Amore</b><br>Italian Steakhouse & Wine Lounge.").addTo(essenTrinken);
+	    L.marker([48.767465783868815, 9.175744852825371], { icon: restaurantIcon, title: 'Herbertz Espressobar'}).bindPopup("<b>Herbertz Espressobar</b><br>Hier gibt es verschiedene Kaffees.").addTo(essenTrinken);
+	    L.marker([48.76293329129984, 9.164389468423861], { icon: restaurantIcon, title: 'Goldener Adler'}).bindPopup("<b>Goldener Adler</b><br>Hier gibt es Regionalkost.").addTo(essenTrinken);
+	    L.marker([48.77310323314026, 9.179908203758425], { icon: restaurantIcon, title: 'BIX Jazzclub'}).bindPopup("<b>BIX Jazzclub</b><br>Hier gibt es verschiedene Cocktails.").addTo(essenTrinken);
+
+	// Wohnen
 	    L.marker([48.784322116385056, 9.189132806098197], { icon: houseIcon, title: 'Le Méridien' }).bindPopup("<b>Le Méridien</b><br>Hotel nah am Bahnhof").addTo(wohnen);
-	    
+	    L.marker([48.780888695693534, 9.19095479828532], { icon: houseIcon, title: 'DJH Jugendherberge' }).bindPopup("<b>DJH Jugendherberge</b><br>Internationale Jugendherberge").addTo(wohnen);
+	    L.marker([48.78234533736691, 9.178822003610856], { icon: houseIcon, title: 'Motel One' }).bindPopup("<b>Motel One</b><br>Hotel nah an der Koenigsstrasse").addTo(wohnen);
+	    L.marker([48.7853460117814, 9.174826037979527], { icon: houseIcon, title: 'Kronenhotel' }).bindPopup("<b>Kronenhotel</b><br>teureres Hotel").addTo(wohnen);
+	    L.marker([48.77684962466155, 9.171549651418644], { icon: houseIcon, title: 'Hotel Wartburg' }).bindPopup("<b>Hotel Wartburg</b><br>Hotel nahe der Schlossstrasse").addTo(wohnen);
+		    
         var overlays = {
             "Essen & Trinken": essenTrinken,
             "Kunst & Kultur": kunstKultur,
