@@ -18,10 +18,18 @@
             maxZoom: 19
         });
         CartoDB_Positron.addTo(mymap);
-}
-        
-        
 
+
+        function getColor(d) {
+        return d > 2020 ? '#1a9850' :
+               d > 2000 ? '#66bd63' :
+               d > 1980 ? '#a6d96a' :
+               d > 1970 ? '#d9ef8b' :
+               d > 1950 ? '#fee08b' :
+               d > 1930 ? '#fdae61' :
+               d > 1910 ? '#f46d43' :
+                          '#d73027' ;
+}
         function style(feature) {
             return {
                 fillColor: getColor(feature.properties.Year_of_co),
@@ -66,23 +74,10 @@
 
         legend.addTo(mymap);
         
-    
+    }
 
     window.onload = initialize;
-
-
-
-    function getColor(d) {
-        return d > 2020 ? '#1a9850' :
-               d > 2000 ? '#66bd63' :
-               d > 1980 ? '#a6d96a' :
-               d > 1970 ? '#d9ef8b' :
-               d > 1950 ? '#fee08b' :
-               d > 1930 ? '#fdae61' :
-               d > 1910 ? '#f46d43' :
-                          '#d73027' ;
-
-    }
+    
 </script>
 
     <style>
