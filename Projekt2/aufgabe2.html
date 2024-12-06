@@ -1,12 +1,11 @@
 <html>
 <head>	
-<title>Leaflet Bsp 1</title>
+<title>Aufgabe 2</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@latest/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@latest/dist/leaflet.js"></script>
 <script src="building_data.js"></script>
 
 <script>
-    //lese die daten aus building_data.js aus
     //console.log(building_data.features[0].properties.Year_of_co);
     //console.log(building_data.features[0].properties.Latitude);
     //console.log(building_data.features[0].properties.Longitude);
@@ -19,19 +18,6 @@
             maxZoom: 19
         });
         CartoDB_Positron.addTo(mymap);
-
-        function getColor(d) {
-
-       
-        return d > 2020 ? '#1a9850' :
-               d > 2000 ? '#66bd63' :
-               d > 1980 ? '#a6d96a' :
-               d > 1970 ? '#d9ef8b' :
-               d > 1950 ? '#fee08b' :
-               d > 1930 ? '#fdae61' :
-               d > 1910 ? '#f46d43' :
-                          '#d73027' ;
-}
 }
         
         
@@ -83,6 +69,20 @@
     }
 
     window.onload = initialize;
+
+
+
+    function getColor(d) {
+        return d > 2020 ? '#1a9850' :
+               d > 2000 ? '#66bd63' :
+               d > 1980 ? '#a6d96a' :
+               d > 1970 ? '#d9ef8b' :
+               d > 1950 ? '#fee08b' :
+               d > 1930 ? '#fdae61' :
+               d > 1910 ? '#f46d43' :
+                          '#d73027' ;
+}
+    
 </script>
 
     <style>
